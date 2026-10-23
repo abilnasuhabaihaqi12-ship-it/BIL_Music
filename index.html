@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101510">
+<title>BIL Music — Dengarkan Musik</title>
+<style>
+:root{--bg:#080b09;--panel:#111713;--panel2:#19221b;--green:#1ed760;--muted:#a4b0a7;--text:#f4f7f4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial}
+button,input{font:inherit}button{cursor:pointer;border:0}.app{display:grid;grid-template-columns:225px 1fr;min-height:100vh}
+aside{background:#050705;padding:24px 16px;border-right:1px solid #1b241d;position:sticky;top:0;height:100vh}
+.brand{font-size:24px;font-weight:850;letter-spacing:-1px;margin:0 0 30px}.brand span{color:var(--green)}
+.nav{display:grid;gap:8px}.nav button{color:var(--muted);background:transparent;text-align:left;padding:12px;border-radius:9px}.nav button:hover,.nav button.active{background:var(--panel2);color:white}
+.side-note{color:#7e8a80;font-size:12px;position:absolute;bottom:22px;left:20px;right:20px}
+main{padding:26px clamp(16px,4vw,48px) 120px;max-width:1500px;width:100%;margin:auto}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:28px}
+.search{display:flex;align-items:center;gap:10px;background:#202a22;border:1px solid #2b392d;border-radius:999px;padding:0 16px;max-width:520px;width:100%}
+.search input{width:100%;padding:13px 0;color:white;background:transparent;border:0;outline:0}
+.pill{background:var(--green);color:#041006;font-weight:800;padding:10px 16px;border-radius:999px}
+.hero{background:radial-gradient(circle at 80% 20%,#2c7c42 0,#183b24 30%,#15241a 62%,#111713 100%);border-radius:20px;padding:clamp(22px,4vw,42px);display:flex;align-items:center;justify-content:space-between;gap:20px;overflow:hidden;margin-bottom:32px}
+.eyebrow{color:#a9f5bd;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(30px,5vw,54px);line-height:1.03;letter-spacing:-2px;margin:10px 0}.hero p{max-width:480px;color:#d1e0d4}.hero-art{font-size:clamp(65px,12vw,125px);filter:drop-shadow(0 10px 24px #0006)}
+h2{font-size:22px;margin:28px 0 15px;letter-spacing:-.5px}.sub{color:var(--muted);margin-top:-7px;margin-bottom:18px;font-size:13px}
+.genres{display:flex;gap:10px;flex-wrap:wrap}.genre{padding:10px 15px;background:var(--panel);border:1px solid #263128;color:#e4ece5;border-radius:999px}.genre:hover,.genre.selected{background:#24472d;border-color:#3d9e55}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:15px}.card{background:var(--panel);padding:12px;border-radius:13px;transition:.15s;min-width:0}.card:hover{background:#1a241c;transform:translateY(-2px)}.cover{width:100%;aspect-ratio:1;display:grid;place-items:center;border-radius:9px;font-size:44px;background:linear-gradient(135deg,#274d33,#18251c);margin-bottom:12px}.card h3{font-size:14px;margin:0 0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.card p{font-size:12px;color:var(--muted);margin:0 0 12px}.card-actions{display:flex;gap:7px}.smallbtn{flex:1;background:#263329;color:white;border-radius:8px;padding:8px 6px;font-size:12px}.smallbtn.primary{background:var(--green);color:#061008;font-weight:800}.smallbtn:hover{filter:brightness(1.1)}
+.player-section{background:var(--panel);border:1px solid #253128;border-radius:15px;padding:16px;margin-top:25px}.player-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.player-head h2{margin:0 0 5px}.player-head p{margin:0;color:var(--muted);font-size:13px}.embed{margin-top:14px;aspect-ratio:16/9;width:100%;background:#060806;border-radius:10px;overflow:hidden}.embed iframe{width:100%;height:100%;border:0}.urlrow{display:flex;gap:8px;margin-top:12px}.urlrow input{min-width:0;flex:1;background:#202a22;border:1px solid #344236;border-radius:8px;color:white;padding:11px}.urlrow button{background:var(--green);color:#061008;font-weight:800;padding:0 14px;border-radius:8px}.notice{font-size:12px;color:#91a095;margin-top:10px}.empty{padding:22px;background:var(--panel);border-radius:12px;color:var(--muted)}
+.bottom{position:fixed;bottom:0;left:225px;right:0;background:#101510f2;backdrop-filter:blur(12px);border-top:1px solid #29332b;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:5}.bottom strong{font-size:14px}.bottom small{display:block;color:var(--muted)}.bottom button{background:var(--green);color:#061008;padding:9px 14px;border-radius:999px;font-weight:800}
+footer{color:#718074;font-size:12px;margin-top:35px}
+@media(max-width:720px){.app{display:block}aside{height:auto;position:relative;padding:14px 16px;border-right:0;border-bottom:1px solid #1b241d}.brand{margin:0;font-size:22px}.nav{display:flex;gap:5px;overflow:auto;margin-top:12px}.nav button{white-space:nowrap;padding:8px 10px;font-size:13px}.side-note{display:none}main{padding-top:18px}.hero-art{display:none}.bottom{left:0;padding:10px 14px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.urlrow{flex-wrap:wrap}.urlrow input{flex-basis:100%;padding:12px}.urlrow button{padding:11px;flex:1}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand">♫ BIL <span>Music</span></div>
+  <nav class="nav">
+    <button class="active" data-view="home">⌂ Beranda</button>
+    <button data-view="search">⌕ Cari musik</button>
+    <button data-view="favorites">♥ Favorit</button>
+  </nav>
+  <div class="side-note">Musik menemani setiap suasana.<br><br>BIL Music adalah katalog musik independen yang membantu kamu menemukan dan memutar musik dari sumber resmi.</div>
+</aside>
+<main>
+  <div class="top">
+    <div class="search"><span>⌕</span><input id="query" placeholder="Cari lagu, penyanyi, atau genre..." aria-label="Cari musik"><button id="searchBtn" style="background:transparent;color:white">Cari</button></div>
+    <span class="pill">BIL MUSIC</span>
+  </div>
+  <section class="hero">
+    <div><div class="eyebrow">Temukan musik favoritmu</div><h1>Putar suasana.<br>Rasakan musiknya.</h1><p>Temukan lagu dan dengarkan melalui pemutar resmi. Tidak ada tombol unduh lagu di BIL Music.</p><button class="pill" id="explore">Jelajahi musik　↗</button></div>
+    <div class="hero-art">♫</div>
+  </section>
+  <section id="genreSection"><h2>Pilih suasana</h2><div class="genres" id="genres">
+    <button class="genre selected" data-genre="Pop Indonesia">Pop Indonesia</button><button class="genre" data-genre="Dangdut">Dangdut</button><button class="genre" data-genre="Musik Sunda">Musik Sunda</button><button class="genre" data-genre="Pop Barat">Pop Barat</button><button class="genre" data-genre="Lo-fi">Lo-fi</button><button class="genre" data-genre="Akustik">Akustik</button>
+  </div></section>
+  <section><h2 id="listTitle">Pilihan untukmu</h2><p class="sub" id="listSub">Pilih Putar untuk mencari lagu di YouTube, atau tempel tautan video resmi ke pemutar di bawah.</p><div class="grid" id="cards"></div></section>
+  <section class="player-section" id="playerSection">
+    <div class="player-head"><div><h2>▶ Pemutar musik</h2><p id="nowPlaying">Pilih video resmi untuk diputar di sini</p></div><button class="smallbtn" id="openYT">Buka YouTube ↗</button></div>
+    <div class="embed" id="embed"><div style="height:100%;display:grid;place-items:center;text-align:center;padding:20px;color:#9ba89d"><div><div style="font-size:45px">♫</div><strong>Pemutar BIL Music</strong><p style="font-size:13px">Tempel tautan video musik resmi di bawah untuk mulai mendengarkan.</p></div></div></div>
+    <div class="urlrow"><input id="videoUrl" placeholder="Tempel tautan YouTube, mis. https://www.youtube.com/watch?v=..." aria-label="Tautan video YouTube"><button id="loadVideo">Putar di sini</button></div>
+    <div class="notice">Pemutaran disediakan oleh YouTube. Ketersediaan lagu, iklan, dan pemutaran latar mengikuti aturan YouTube serta pemilik konten. BIL Music tidak menyimpan atau menyediakan file unduhan.</div>
+  </section>
+  <footer>© <span id="year"></span> BIL Music · Dibuat untuk mendengarkan musik melalui sumber resmi.</footer>
+</main>
+</div>
+<div class="bottom"><div><strong id="bottomTitle">BIL Music</strong><small id="bottomSub">Temukan lagu favoritmu</small></div><button id="bottomSearch">Cari lagu ▶</button></div>
+<script>
+const catalog=[
+ {title:"Pop Indonesia",artist:"Lagu populer Indonesia",emoji:"🇮🇩",color:"linear-gradient(135deg,#1b7540,#17291d)",q:"pop Indonesia lagu resmi"},
+ {title:"Dangdut Favorit",artist:"Dangdut Indonesia",emoji:"🎤",color:"linear-gradient(135deg,#8a4b19,#321d12)",q:"dangdut Indonesia official music video"},
+ {title:"Musik Sunda",artist:"Lagu Sunda",emoji:"🌿",color:"linear-gradient(135deg,#276a55,#122d24)",q:"lagu Sunda resmi"},
+ {title:"Pop Barat",artist:"International pop",emoji:"🌎",color:"linear-gradient(135deg,#4743a0,#211d44)",q:"international pop official music video"},
+ {title:"Lo-fi Chill",artist:"Santai dan fokus",emoji:"🌙",color:"linear-gradient(135deg,#5b437f,#211a31)",q:"lofi music official livestream"},
+ {title:"Akustik Santai",artist:"Acoustic sessions",emoji:"🎸",color:"linear-gradient(135deg,#9a693b,#39251a)",q:"acoustic session official music"},
+ {title:"Musik 2000-an",artist:"Nostalgia",emoji:"💿",color:"linear-gradient(135deg,#9b3567,#35182a)",q:"lagu hits 2000 Indonesia official"},
+ {title:"Lagu Galau",artist:"Temani suasana",emoji:"🌧️",color:"linear-gradient(135deg,#3f657b,#182732)",q:"lagu galau Indonesia official music video"},
+ {title:"Musik Relaksasi",artist:"Tenang sejenak",emoji:"🍃",color:"linear-gradient(135deg,#4b7d57,#1b3020)",q:"relaxing instrumental music official"},
+ {title:"Indie Indonesia",artist:"Musik independen",emoji:"✨",color:"linear-gradient(135deg,#a15c36,#38251a)",q:"indie Indonesia official music video"},
+ {title:"K-Pop",artist:"Korean pop",emoji:"💫",color:"linear-gradient(135deg,#9b4c91,#351b3c)",q:"K-pop official music video"},
+ {title:"Rock",artist:"Rock favorites",emoji:"⚡",color:"linear-gradient(135deg,#6e3030,#2d1717)",q:"rock music official music video"}
+];
+const $=s=>document.querySelector(s);
+let view="home", genre="Pop Indonesia", currentQuery="";
+let favorites=JSON.parse(localStorage.getItem("bilMusicFavorites")||"[]");
+function safeText(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){
+ let list=catalog;
+ if(view==="favorites"){list=catalog.filter(x=>favorites.includes(x.title));$("#listTitle").textContent="Favorit kamu";$("#listSub").textContent="Koleksi favorit tersimpan di perangkat ini."}
+ else if(currentQuery){list=catalog.filter(x=>(x.title+" "+x.artist+" "+x.q).toLowerCase().includes(currentQuery.toLowerCase()));$("#listTitle").textContent="Hasil pencarian";$("#listSub").textContent="Pilih Putar untuk mencari sumber musik resmi."}
+ else {list=catalog.filter(x=>genre==="Semua"||x.title.toLowerCase().includes(genre.toLowerCase())||x.q.toLowerCase().includes(genre.toLowerCase()));if(!list.length)list=catalog;$("#listTitle").textContent="Pilihan untukmu";$("#listSub").textContent="Katalog genre untuk membantumu menemukan musik."}
+ $("#cards").innerHTML=list.length?list.map(x=>`<article class="card"><div class="cover" style="background:${x.color}">${x.emoji}</div><h3>${safeText(x.title)}</h3><p>${safeText(x.artist)}</p><div class="card-actions"><button class="smallbtn primary" data-play="${safeText(x.q)}" data-title="${safeText(x.title)}">▶ Putar</button><button class="smallbtn" data-fav="${safeText(x.title)}">${favorites.includes(x.title)?"♥":"♡"}</button></div></article>`).join(""):`<div class="empty">Belum ada favorit. Tekan ♡ pada kartu musik untuk menyimpannya.</div>`;
+ document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>searchMusic(b.dataset.play,b.dataset.title));
+ document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{const t=b.dataset.fav;favorites=favorites.includes(t)?favorites.filter(v=>v!==t):[...favorites,t];localStorage.setItem("bilMusicFavorites",JSON.stringify(favorites));render()});
+}
+function searchMusic(q,title){$("#query").value=q;$("#nowPlaying").textContent="Cari dan pilih video resmi: "+title;$("#bottomTitle").textContent=title;$("#bottomSub").textContent="Pencarian YouTube dibuka di tab baru";window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q)," _blank");}
+function runSearch(){currentQuery=$("#query").value.trim();view="search";render();if(currentQuery){$("#nowPlaying").textContent="Hasil pencarian untuk: "+currentQuery;}}
+function videoId(raw){try{let u=new URL(raw);if(u.hostname.includes("youtu.be"))return u.pathname.split("/").filter(Boolean)[0]||"";if(u.hostname.includes("youtube.com")){if(u.pathname==="/watch")return u.searchParams.get("v")||"";let p=u.pathname.split("/").filter(Boolean);if(["embed","shorts","live"].includes(p[0]))return p[1]||""}}catch(e){}if(/^[a-zA-Z0-9_-]{11}$/.test(raw.trim()))return raw.trim();return ""}
+$("#searchBtn").onclick=runSearch;$("#query").addEventListener("keydown",e=>{if(e.key==="Enter")runSearch()});
+$("#explore").onclick=()=>{$("#genreSection").scrollIntoView({behavior:"smooth"})};
+$("#bottomSearch").onclick=()=>{$("#query").focus();window.scrollTo({top:0,behavior:"smooth"})};
+$("#openYT").onclick=()=>window.open("https://www.youtube.com","_blank");
+$("#loadVideo").onclick=()=>{let id=videoId($("#videoUrl").value);if(!id){alert("Masukkan tautan video YouTube yang valid atau ID video 11 karakter.");return}$("#embed").innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0" title="Pemutar musik YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;$("#nowPlaying").textContent="Video musik sedang diputar";$("#bottomTitle").textContent="BIL Music";$("#bottomSub").textContent="Pemutaran melalui YouTube";$("#playerSection").scrollIntoView({behavior:"smooth",block:"start"})};
+document.querySelectorAll("[data-genre]").forEach(b=>b.onclick=()=>{genre=b.dataset.genre;currentQuery="";view="home";document.querySelectorAll("[data-genre]").forEach(x=>x.classList.toggle("selected",x===b));render()});
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{view=b.dataset.view;currentQuery="";document.querySelectorAll("[data-view]").forEach(x=>x.classList.toggle("active",x===b));render();if(view==="search")$("#query").focus()});
+$("#year").textContent=new Date().getFullYear();render();
+</script>
+</body>
+</html>
